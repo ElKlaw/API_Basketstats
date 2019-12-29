@@ -41,7 +41,7 @@ public class Equipe {
 	
 	@Column(name="category")
 	@ApiModelProperty(notes = "Catégorie de l'équipe", example = "U20", position = 4)
-	private String category;
+	private String categorie;
 	
 	@Column(name="sexe")
 	@ApiModelProperty(notes = "Sexe de l'équipe", example = "Masculin ou Feminin", position = 5)
@@ -104,12 +104,12 @@ public class Equipe {
 		this.nom = nom;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getCategorie() {
+		return categorie;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategorie(String categorie) {
+		this.categorie = categorie;
 	}
 
 	public String getSexe() {

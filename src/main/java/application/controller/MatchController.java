@@ -32,8 +32,12 @@ public class MatchController {
 	
 	@ApiOperation(value="Trouver les matchs de l'équipe correspondant à l'ID")
 	@GetMapping("equipe/{id}/matchs")
-	public ResponseEntity<List<Match>> getEventsEquipe(@PathVariable("id") Integer id) {
-		List<Match> listMatch = matchService.getMatchsEquipe(id);
+	public ResponseEntity<Page<Event>> getEventsEquipe(@PathVariable("id") Integer id,
+			@RequestParam(defaultValue="0", value="page", required=false) int page, 
+			@RequestParam(defaultValue="10", value="size", required=false) int size,
+			@RequestParam(value="type", required=false) String typeRecherche) {
+		Pageable pageable =  PageRequest.of(page, size);
+		Page<Event> listMatch = matchService.getMatchsEquipe(id, pageable, typeRecherche);
 		return new ResponseEntity<>(listMatch,HttpStatus.OK);
 	}
 	
@@ -44,7 +48,7 @@ public class MatchController {
 			@RequestParam(defaultValue="10", value="size", required=false) int size,
 			@RequestParam(value="type", required=false) String typeRecherche) {
 		Pageable pageable =  PageRequest.of(page, size);
-		Page<Event> listMatch = matchService.getMatchsClub(id,pageable, typeRecherche);
+		Page<Event> listMatch = matchService.getMatchsClub(id, pageable, typeRecherche);
 		return new ResponseEntity<>(listMatch,HttpStatus.OK);
 	}
 	

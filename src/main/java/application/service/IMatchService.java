@@ -10,8 +10,8 @@ import application.bean.Event;
 import application.bean.Match;
 
 public interface IMatchService {
-	List<Match> getMatchsEquipe(int id);
 	List<Match> getMatchsJoueur(int id);
+	Page<Event> getMatchsEquipe(int id, Pageable pageable, String typeRecherche);
 	Page<Event> getMatchsClub(int id, Pageable pageable, String typeRecherche);
 	
 	// Chemin de base
@@ -19,4 +19,5 @@ public interface IMatchService {
 	Match addMatch(Match match);
 	Match updateMatch(Match match);
 	boolean deleteMatch(int id);
+	
 }

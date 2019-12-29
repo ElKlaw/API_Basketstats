@@ -22,9 +22,13 @@ public class MatchService implements IMatchService {
 	private MatchRepository matchRepository;
 	
 	@Override
-	public List<Match> getMatchsEquipe(int id) {
-		return StreamSupport.stream(matchRepository.getAllMatchFromEquipe(id).spliterator(), false)
-                .collect(Collectors.toList());
+	public Page<Event> getMatchsEquipe(int id, Pageable pageable, String typeRecherche) {
+		if(TypeRechercheMatch.PASSE.toString().equals(typeRecherche)) {
+			return matchRepository.getMatchFromEquipePasse(id, pageable);
+		} else if(TypeRechercheMatch.FUTUR.toString().equals(typeRecherche)) {
+			return matchRepository.getMatchFromEquipeFutur(id, pageable);
+		}
+		return matchRepository.getAllMatchFromEquipe(id, pageable);
 	}
 
 	@Override
