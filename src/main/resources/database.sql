@@ -27,8 +27,16 @@ DROP TABLE IF EXISTS Ville;
 DROP TABLE IF EXISTS StatistiqueJoueur;
 DROP TABLE IF EXISTS StatistiqueEquipe;
 DROP TABLE IF EXISTS Presence;
+DROP TABLE IF EXISTS Photo;
 
+/*------------------ TABLE PHOTO ------------------*/
 
+CREATE TABLE Photo(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nom VARCHAR(200), 
+	extension VARCHAR(5),
+	chemin VARCHAR(500)
+);
 
 /*------------------ TABLE JOUEUR ------------------*/
 
@@ -74,8 +82,13 @@ CREATE TABLE Club(
 	nom VARCHAR(200),
 	url VARCHAR(200) UNIQUE,
 	nomComplet VARCHAR(200),
-	sport VARCHAR(50)
+	sport VARCHAR(50),
+	idLogo INT NOT NULL,
+	idFond INT NOT NULL,
+	FOREIGN KEY (idLogo) REFERENCES Photo(id),
+	FOREIGN KEY (idFond) REFERENCES Photo(id)
 );
+
 
 /*------------------ TABLE EQUIPE ------------------*/
 
@@ -97,7 +110,7 @@ CREATE TABLE Equipe(
 CREATE TABLE Ville(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nom VARCHAR(100),
-	codeDepartement INT,
+	codeDepartement VARCHAR(3),
 	departement VARCHAR(40),
 	region VARCHAR(60),
 	codePostal INT,
@@ -273,6 +286,9 @@ CREATE TABLE EventClub(
 );
 
 /*-----------------------------------------DATA-----------------------------------*/
+/*-------------------------  VALEUR Photo --------------------------*/
+INSERT INTO Photo VALUES (1,'fond','jpg','C:\\Users\\Norsys-Nantes-15\\git\\Application_Basketstats\\Photo\\lmb49\\fond.jpg');
+INSERT INTO Photo VALUES (2,'logo','jpg','C:\\Users\\Norsys-Nantes-15\\git\\Application_Basketstats\\Photo\\lmb49\\logo.jpg');
 
 /* ------------------------  VALEUR Joueur ----------------------------*/
 
@@ -323,8 +339,8 @@ INSERT INTO Joueur VALUES (40,'nomF20','prenomF20','Femme','1990-08-06');
 
 /* ------------------------  VALEUR Club ----------------------------*/
 
-INSERT INTO Club VALUES (1,'491170B','LMB','lmb49','Lamboisière Martin Basket','BasketBall');
-INSERT INTO Club VALUES (2,'411180B','PL','parislevalloisbasket','Paris Levallois','BasketBall');
+INSERT INTO Club VALUES (1,'491170B','LMB','lmb49','Lamboisière Martin Basket','BasketBall',2,1);
+INSERT INTO Club VALUES (2,'411180B','PL','parislevalloisbasket','Paris Levallois','BasketBall',2,1);
 
 /* ------------------------  VALEUR Equipe ----------------------------*/
 

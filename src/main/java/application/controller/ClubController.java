@@ -47,7 +47,7 @@ public class ClubController {
 	
 	@ApiOperation(value="Obtenir l'ensemble des clubs correspondant à la recherche")
 	@GetMapping("/clubs/results")
-	public ResponseEntity<Page<Club>> searchClubs(@RequestParam(value="search_query") String nom, 
+	public ResponseEntity<Page<Club>> searchClubs(@RequestParam(defaultValue="", value="search_query", required=false) String nom, 
 			@RequestParam(defaultValue="0", value="page", required=false) int page, 
 			@RequestParam(defaultValue="3", value="size", required=false) int size){
 		Pageable pageable =  PageRequest.of(page, size);
@@ -70,14 +70,14 @@ public class ClubController {
 	@PostMapping(value="club")
 	public ResponseEntity<Club> addClub(@RequestBody Club club) {
 		// Recupération du user
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Optional<Utilisateur> utilisateur = utilisateurService.getUtilisateurById(Integer.parseInt((String) authentication.getPrincipal()));
-		if(utilisateur.isPresent()) {
+		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		//Optional<Utilisateur> utilisateur = utilisateurService.getUtilisateurById(Integer.parseInt((String) authentication.getPrincipal()));
+		//if(utilisateur.isPresent()) {
 			Club clubResponse = clubService.addClub(club);
-			clubService.addJoueurToClub(clubResponse, utilisateur.get().getJoueur());
+			//clubService.addJoueurToClub(clubResponse, utilisateur.get().getJoueur());
 			return new ResponseEntity<>(clubResponse, HttpStatus.OK);
-		}
-		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		//}
+		//return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 	
 	@ApiOperation(value="Modifier un club")

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -47,7 +48,6 @@ public class Club {
 	@ApiModelProperty(notes = "Sport pratiqué par le club", position = 3)
 	private String sport;
 	
-	
 	@OneToMany(mappedBy="clubEquipe")
 	@JsonIgnore
 	private Set<Equipe> equipes = new HashSet<>();
@@ -55,6 +55,14 @@ public class Club {
 	@OneToMany(mappedBy="clubSalle")
 	@JsonIgnore
 	private Set<Lieu> salles = new HashSet<>();
+	
+	@OneToOne
+	@JoinColumn(name = "idFond", referencedColumnName = "id")
+	private Photo fond;
+	
+	@OneToOne
+	@JoinColumn(name = "idLogo", referencedColumnName = "id")
+	private Photo logo;
 	
 	@ManyToMany
 	@JoinTable(name="clubville",
@@ -151,6 +159,22 @@ public class Club {
 
 	public void setJoueurs(Set<Joueur> joueurs) {
 		this.joueurs = joueurs;
+	}
+
+	public Photo getFond() {
+		return fond;
+	}
+
+	public void setFond(Photo fond) {
+		this.fond = fond;
+	}
+
+	public Photo getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Photo logo) {
+		this.logo = logo;
 	}
 	
 	
