@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -29,6 +31,7 @@ public class Photo {
 	
 	@Column(name="chemin")
 	@ApiModelProperty(notes = "", example = "", position = 1)
+	@JsonIgnore
 	private String chemin;
 
 	public String getNom() {

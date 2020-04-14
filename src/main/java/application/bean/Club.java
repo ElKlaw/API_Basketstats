@@ -57,11 +57,11 @@ public class Club {
 	private Set<Lieu> salles = new HashSet<>();
 	
 	@OneToOne
-	@JoinColumn(name = "idFond", referencedColumnName = "id")
+	@JoinColumn(name = "idfond", referencedColumnName = "id")
 	private Photo fond;
 	
 	@OneToOne
-	@JoinColumn(name = "idLogo", referencedColumnName = "id")
+	@JoinColumn(name = "idlogo", referencedColumnName = "id")
 	private Photo logo;
 	
 	@ManyToMany

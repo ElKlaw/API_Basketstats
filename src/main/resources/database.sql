@@ -11,7 +11,7 @@ SET names 'utf8';
 DROP TABLE IF EXISTS ClubVille;
 DROP TABLE IF EXISTS JoueurEquipe;
 
-DROP TABLE IF EXISTS Utilisateur;
+DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Role;
 DROP TABLE IF EXISTS RoleUtilisateur;
 DROP TABLE IF EXISTS Joueur;
@@ -45,11 +45,13 @@ CREATE TABLE Joueur(
 	nom VARCHAR(100),
 	prenom VARCHAR(100),
 	sexe ENUM('Homme','Femme'),
-	dateNaissance DATE	
+	dateNaissance DATE,
+	idPhoto INT,
+	FOREIGN KEY (idPhoto) REFERENCES Photo(id)
 );
 
 /*------------------ TABLE Utilisateur ------------------*/
-CREATE TABLE Utilisateur(
+/*CREATE TABLE Utilisateur(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	identifiant VARCHAR(100) UNIQUE,
 	motdepasse VARCHAR(200),
@@ -57,22 +59,35 @@ CREATE TABLE Utilisateur(
 	idJoueur INT NOT NULL,
 	secret VARCHAR(200),
 	FOREIGN KEY (idJoueur) REFERENCES Joueur(id)
+);*/
+
+/*------------------ TABLE Utilisateur ------------------*/
+CREATE TABLE User(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(100),
+	photourl VARCHAR(200),
+	email VARCHAR(200) UNIQUE,
+	emailverified BOOLEAN,
+	password VARCHAR(200),
+	provider VARCHAR(200),
+	providerid VARCHAR(200)
 );
+
 
 /*------------------ TABLE Role ------------------*/
-CREATE TABLE Role(
+/*CREATE TABLE Role(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100)
-);
+);*/
 
 /*------------------ TABLE RoleUtilisateur ------------------*/
-CREATE TABLE RoleUtilisateur(
+/*CREATE TABLE RoleUtilisateur(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	idRole INT NOT NULL,
 	idUtilisateur INT NOT NULL,
 	FOREIGN KEY (idRole) REFERENCES Role(id),
 	FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id)
-);
+);*/
 
 /*------------------ TABLE CLUB ------------------*/
 
@@ -97,12 +112,14 @@ CREATE TABLE Equipe(
 	saison VARCHAR(12),
 	phase INT,
 	nom VARCHAR(200), 
-	category VARCHAR(30),
+	categorie VARCHAR(30),
 	sexe VARCHAR(50), 
 	niveau VARCHAR(40), 
 	division VARCHAR(30), 
 	poule VARCHAR(30), 
 	idClub INT NOT NULL,
+	idPhoto INT,
+	FOREIGN KEY (idPhoto) REFERENCES Photo(id),
 	FOREIGN KEY (idClub) REFERENCES Club(id)
 );
 /*------------------ TABLE VILLE ------------------*/
@@ -289,73 +306,75 @@ CREATE TABLE EventClub(
 /*-------------------------  VALEUR Photo --------------------------*/
 INSERT INTO Photo VALUES (1,'fond','jpg','C:\\Users\\Norsys-Nantes-15\\git\\Application_Basketstats\\Photo\\lmb49\\fond.jpg');
 INSERT INTO Photo VALUES (2,'logo','jpg','C:\\Users\\Norsys-Nantes-15\\git\\Application_Basketstats\\Photo\\lmb49\\logo.jpg');
+INSERT INTO Photo VALUES (3,'fond','jpg','C:\\Users\\Norsys-Nantes-15\\git\\Application_Basketstats\\Photo\\parislevalloisbasket\\fond.jpg');
+INSERT INTO Photo VALUES (4,'logo','png','C:\\Users\\Norsys-Nantes-15\\git\\Application_Basketstats\\Photo\\parislevalloisbasket\\logo.png');
 
 /* ------------------------  VALEUR Joueur ----------------------------*/
 
 /*---- Homme ----*/
-INSERT INTO Joueur VALUES (1,'nomH1','prenomH1','Homme','2008-11-06');
-INSERT INTO Joueur VALUES (2,'nomH2','prenomH2','Homme','2006-12-06');
-INSERT INTO Joueur VALUES (3,'nomH3','prenomH3','Homme','2004-01-06');
-INSERT INTO Joueur VALUES (4,'nomH4','prenomH4','Homme','2002-02-06');
-INSERT INTO Joueur VALUES (5,'nomH5','prenomH5','Homme','2000-03-06');
-INSERT INTO Joueur VALUES (6,'nomH6','prenomH6','Homme','1998-04-06');
-INSERT INTO Joueur VALUES (7,'nomH7','prenomH7','Homme','1996-05-06');
-INSERT INTO Joueur VALUES (8,'nomH8','prenomH8','Homme','1994-06-06');
-INSERT INTO Joueur VALUES (9,'nomH9','prenomH9','Homme','1992-07-06');
-INSERT INTO Joueur VALUES (10,'nomH10','prenomH10','Homme','1990-08-06');
-INSERT INTO Joueur VALUES (11,'nomH11','prenomH11','Homme','2008-11-06');
-INSERT INTO Joueur VALUES (12,'nomH12','prenomH12','Homme','2006-12-06');
-INSERT INTO Joueur VALUES (13,'nomH13','prenomH13','Homme','2004-01-06');
-INSERT INTO Joueur VALUES (14,'nomH14','prenomH14','Homme','2002-02-06');
-INSERT INTO Joueur VALUES (15,'nomH15','prenomH15','Homme','2000-03-06');
-INSERT INTO Joueur VALUES (16,'nomH16','prenomH16','Homme','1998-04-06');
-INSERT INTO Joueur VALUES (17,'nomH17','prenomH17','Homme','1996-05-06');
-INSERT INTO Joueur VALUES (18,'nomH18','prenomH18','Homme','1994-06-06');
-INSERT INTO Joueur VALUES (19,'nomH19','prenomH19','Homme','1992-07-06');
-INSERT INTO Joueur VALUES (20,'nomH20','prenomH20','Homme','1990-08-06');
+INSERT INTO Joueur VALUES (1,'nomH1','prenomH1','Homme','2008-11-06',NULL);
+INSERT INTO Joueur VALUES (2,'nomH2','prenomH2','Homme','2006-12-06',NULL);
+INSERT INTO Joueur VALUES (3,'nomH3','prenomH3','Homme','2004-01-06',NULL);
+INSERT INTO Joueur VALUES (4,'nomH4','prenomH4','Homme','2002-02-06',NULL);
+INSERT INTO Joueur VALUES (5,'nomH5','prenomH5','Homme','2000-03-06',NULL);
+INSERT INTO Joueur VALUES (6,'nomH6','prenomH6','Homme','1998-04-06',NULL);
+INSERT INTO Joueur VALUES (7,'nomH7','prenomH7','Homme','1996-05-06',NULL);
+INSERT INTO Joueur VALUES (8,'nomH8','prenomH8','Homme','1994-06-06',NULL);
+INSERT INTO Joueur VALUES (9,'nomH9','prenomH9','Homme','1992-07-06',NULL);
+INSERT INTO Joueur VALUES (10,'nomH10','prenomH10','Homme','1990-08-06',NULL);
+INSERT INTO Joueur VALUES (11,'nomH11','prenomH11','Homme','2008-11-06',NULL);
+INSERT INTO Joueur VALUES (12,'nomH12','prenomH12','Homme','2006-12-06',NULL);
+INSERT INTO Joueur VALUES (13,'nomH13','prenomH13','Homme','2004-01-06',NULL);
+INSERT INTO Joueur VALUES (14,'nomH14','prenomH14','Homme','2002-02-06',NULL);
+INSERT INTO Joueur VALUES (15,'nomH15','prenomH15','Homme','2000-03-06',NULL);
+INSERT INTO Joueur VALUES (16,'nomH16','prenomH16','Homme','1998-04-06',NULL);
+INSERT INTO Joueur VALUES (17,'nomH17','prenomH17','Homme','1996-05-06',NULL);
+INSERT INTO Joueur VALUES (18,'nomH18','prenomH18','Homme','1994-06-06',NULL);
+INSERT INTO Joueur VALUES (19,'nomH19','prenomH19','Homme','1992-07-06',NULL);
+INSERT INTO Joueur VALUES (20,'nomH20','prenomH20','Homme','1990-08-06',NULL);
 
 
 /*---- Femme ----*/
-INSERT INTO Joueur VALUES (21,'nomF1','prenomF1','Femme','2008-11-06');
-INSERT INTO Joueur VALUES (22,'nomF2','prenomF2','Femme','2006-12-06');
-INSERT INTO Joueur VALUES (23,'nomF3','prenomF3','Femme','2004-01-06');
-INSERT INTO Joueur VALUES (24,'nomF4','prenomF4','Femme','2002-02-06');
-INSERT INTO Joueur VALUES (25,'nomF5','prenomF5','Femme','2000-03-06');
-INSERT INTO Joueur VALUES (26,'nomF6','prenomF6','Femme','1998-04-06');
-INSERT INTO Joueur VALUES (27,'nomF7','prenomF7','Femme','1996-05-06');
-INSERT INTO Joueur VALUES (28,'nomF8','prenomF8','Femme','1994-06-06');
-INSERT INTO Joueur VALUES (29,'nomF9','prenomF9','Femme','1992-07-06');
-INSERT INTO Joueur VALUES (30,'nomF10','prenomF10','Femme','1990-08-06');
-INSERT INTO Joueur VALUES (31,'nomF11','prenomF11','Femme','2008-11-06');
-INSERT INTO Joueur VALUES (32,'nomF12','prenomF12','Femme','2006-12-06');
-INSERT INTO Joueur VALUES (33,'nomF13','prenomF13','Femme','2004-01-06');
-INSERT INTO Joueur VALUES (34,'nomF14','prenomF14','Femme','2002-02-06');
-INSERT INTO Joueur VALUES (35,'nomF15','prenomF15','Femme','2000-03-06');
-INSERT INTO Joueur VALUES (36,'nomF16','prenomF16','Femme','1998-04-06');
-INSERT INTO Joueur VALUES (37,'nomF17','prenomF17','Femme','1996-05-06');
-INSERT INTO Joueur VALUES (38,'nomF18','prenomF18','Femme','1994-06-06');
+INSERT INTO Joueur VALUES (21,'nomF1','prenomF1','Femme','2008-11-06',NULL);
+INSERT INTO Joueur VALUES (22,'nomF2','prenomF2','Femme','2006-12-06',NULL);
+INSERT INTO Joueur VALUES (23,'nomF3','prenomF3','Femme','2004-01-06',NULL);
+INSERT INTO Joueur VALUES (24,'nomF4','prenomF4','Femme','2002-02-06',NULL);
+INSERT INTO Joueur VALUES (25,'nomF5','prenomF5','Femme','2000-03-06',NULL);
+INSERT INTO Joueur VALUES (26,'nomF6','prenomF6','Femme','1998-04-06',NULL);
+INSERT INTO Joueur VALUES (27,'nomF7','prenomF7','Femme','1996-05-06',NULL);
+INSERT INTO Joueur VALUES (28,'nomF8','prenomF8','Femme','1994-06-06',NULL);
+INSERT INTO Joueur VALUES (29,'nomF9','prenomF9','Femme','1992-07-06',NULL);
+INSERT INTO Joueur VALUES (30,'nomF10','prenomF10','Femme','1990-08-06',NULL);
+INSERT INTO Joueur VALUES (31,'nomF11','prenomF11','Femme','2008-11-06',NULL);
+INSERT INTO Joueur VALUES (32,'nomF12','prenomF12','Femme','2006-12-06',NULL);
+INSERT INTO Joueur VALUES (33,'nomF13','prenomF13','Femme','2004-01-06',NULL);
+INSERT INTO Joueur VALUES (34,'nomF14','prenomF14','Femme','2002-02-06',NULL);
+INSERT INTO Joueur VALUES (35,'nomF15','prenomF15','Femme','2000-03-06',NULL);
+INSERT INTO Joueur VALUES (36,'nomF16','prenomF16','Femme','1998-04-06',NULL);
+INSERT INTO Joueur VALUES (37,'nomF17','prenomF17','Femme','1996-05-06',NULL);
+INSERT INTO Joueur VALUES (38,'nomF18','prenomF18','Femme','1994-06-06',NULL);
 INSERT INTO Joueur VALUES (39,'nomF19','prenomF19','Femme','1992-07-06');
 INSERT INTO Joueur VALUES (40,'nomF20','prenomF20','Femme','1990-08-06');
 
 /* ------------------------  VALEUR Club ----------------------------*/
 
 INSERT INTO Club VALUES (1,'491170B','LMB','lmb49','Lamboisière Martin Basket','BasketBall',2,1);
-INSERT INTO Club VALUES (2,'411180B','PL','parislevalloisbasket','Paris Levallois','BasketBall',2,1);
+INSERT INTO Club VALUES (2,'411180B','PL','parislevalloisbasket','Paris Levallois','BasketBall',4,3);
 
 /* ------------------------  VALEUR Equipe ----------------------------*/
 
 /*---- Equipe Homme ----*/
-INSERT INTO Equipe VALUES (1,2017/2018,1,'Equipe Masculine 1','Sénior','Masculin','Départemental','4','A',1);
-INSERT INTO Equipe VALUES (2,2017/2018,2,'Equipe Masculine 2','U20','Masculin','Régional','1','C',1);
-INSERT INTO Equipe VALUES (3,2017/2018,NULL,'Equipe Masculine 3','U17','Masculin','National','1','B',2);
-INSERT INTO Equipe VALUES (4,2017/2018,1,'Equipe Masculine 4','U15','Masculin','Départemental','4','A',2);
+INSERT INTO Equipe VALUES (1,2017/2018,1,'Equipe Masculine 1','Sénior','Masculin','Départemental','4','A',1,NULL);
+INSERT INTO Equipe VALUES (2,2017/2018,2,'Equipe Masculine 2','U20','Masculin','Régional','1','C',1,NULL);
+INSERT INTO Equipe VALUES (3,2017/2018,NULL,'Equipe Masculine 3','U17','Masculin','National','1','B',2,NULL);
+INSERT INTO Equipe VALUES (4,2017/2018,1,'Equipe Masculine 4','U15','Masculin','Départemental','4','A',2,NULL);
 
 
 /*---- Equipe Femme ----*/
-INSERT INTO Equipe VALUES (5,2017/2018,1,'Equipe Féminine 1','Sénior','Féminine','Départemental','1','A',1);
-INSERT INTO Equipe VALUES (6,2017/2018,2,'Equipe Féminine 2','U20','Féminine','Régional','2','C',1);
-INSERT INTO Equipe VALUES (7,2017/2018,NULL,'Equipe Féminine 3','U17','Féminine','National','3','B',2);
-INSERT INTO Equipe VALUES (8,2017/2018,1,'Equipe Féminine 4','U15','Féminine','Départemental','2','A',2);
+INSERT INTO Equipe VALUES (5,2017/2018,1,'Equipe Féminine 1','Sénior','Féminine','Départemental','1','A',1,NULL);
+INSERT INTO Equipe VALUES (6,2017/2018,2,'Equipe Féminine 2','U20','Féminine','Régional','2','C',1,NULL);
+INSERT INTO Equipe VALUES (7,2017/2018,NULL,'Equipe Féminine 3','U17','Féminine','National','3','B',2,NULL);
+INSERT INTO Equipe VALUES (8,2017/2018,1,'Equipe Féminine 4','U15','Féminine','Départemental','2','A',2,NULL);
 
 /* ------------------------  VALEUR Ville ----------------------------*/
 
@@ -566,6 +585,7 @@ INSERT INTO Poule VALUES(NULL,11,'C');
 INSERT INTO Poule VALUES(NULL,11,'D');
 INSERT INTO Poule VALUES(NULL,11,'E');
 INSERT INTO Poule VALUES(NULL,11,'F');
-
+/*
 INSERT INTO Role VALUES(NULL,'USER');
 INSERT INTO Role VALUES(NULL,'ADMIN');
+*/

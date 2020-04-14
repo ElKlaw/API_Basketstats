@@ -42,6 +42,11 @@ public class ClubService implements IClubService {
 	public Optional<Club> getClubByURL(String url) {
 		return clubRepository.findCustomByURL(url);
 	}
+	
+	@Override
+	public Optional<Club> getClubByIdEquipe(int id) {
+		return clubRepository.findCustomByIdEquipe(id);
+	}
 
 	public Club addClub(Club club) {
 		clubRepository.save(club);
@@ -109,7 +114,5 @@ public class ClubService implements IClubService {
 		clubRepository.save(club);
 		return club;
 	}
-
-	
 	
 }

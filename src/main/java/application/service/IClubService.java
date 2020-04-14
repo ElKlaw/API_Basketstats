@@ -17,6 +17,7 @@ public interface IClubService {
 	Page<Club> searchClubs(String nom, Pageable pageable);
 	Optional<Club> getClubById(int id);
 	Optional<Club> getClubByURL(String url);
+	Optional<Club> getClubByIdEquipe(int id);
 	Club addClub(Club club);
 	Club updateClub(Club club);
 	Club patchClub(int id, Club club, Club patchClub);

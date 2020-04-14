@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +40,7 @@ public class Equipe {
 	@ApiModelProperty(notes = "Nom de l'équipe", example = "Equipe Séniors DM2", position = 3)
 	private String nom;
 	
-	@Column(name="category")
+	@Column(name="categorie")
 	@ApiModelProperty(notes = "Catégorie de l'équipe", example = "U20", position = 4)
 	private String categorie;
 	
@@ -58,6 +59,10 @@ public class Equipe {
 	@Column(name="poule")
 	@ApiModelProperty(notes = "Poule de l'équipe", example = "A", position = 8)
 	private String poule;
+	
+	@OneToOne
+	@JoinColumn(name = "idphoto", referencedColumnName = "id")
+	private Photo photo;
 	
 	@ManyToMany(mappedBy="equipes")
 	@JsonIgnore
@@ -160,6 +165,13 @@ public class Equipe {
 		this.clubEquipe = clubEquipe;
 	}
 
-	
+	public Photo getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Photo photo) {
+		this.photo = photo;
+	}
+
 }
 

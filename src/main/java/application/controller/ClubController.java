@@ -9,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import application.bean.Club;
-import application.bean.Utilisateur;
 import application.service.IClubService;
-import application.service.IUtilisateurService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -33,9 +29,7 @@ import io.swagger.annotations.ApiOperation;
 public class ClubController {
 	@Autowired
 	private IClubService clubService;
-	@Autowired
-    IUtilisateurService utilisateurService;
-    
+
 	@ApiOperation(value="Obtenir l'ensemble des clubs")
 	@GetMapping("/clubs")
 	public ResponseEntity<List<Club>> getAllClubWithPageAndSize(@RequestParam(defaultValue="0", value="page", required=false) int page, 
@@ -69,15 +63,8 @@ public class ClubController {
 	@ApiOperation(value="Ajout d'un nouveau club")
 	@PostMapping(value="club")
 	public ResponseEntity<Club> addClub(@RequestBody Club club) {
-		// Recupération du user
-		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		//Optional<Utilisateur> utilisateur = utilisateurService.getUtilisateurById(Integer.parseInt((String) authentication.getPrincipal()));
-		//if(utilisateur.isPresent()) {
-			Club clubResponse = clubService.addClub(club);
-			//clubService.addJoueurToClub(clubResponse, utilisateur.get().getJoueur());
-			return new ResponseEntity<>(clubResponse, HttpStatus.OK);
-		//}
-		//return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		Club clubResponse = clubService.addClub(club);
+		return new ResponseEntity<>(clubResponse, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value="Modifier un club")

@@ -33,15 +33,15 @@ public class PhotoController {
 	private IPhotoService photoService;
 	
 	@PostMapping("photo")
-	public ResponseEntity<Photo> addPhotoClub(@RequestParam("image") MultipartFile file, @RequestParam("urlClub") String urlClub, @RequestParam("typePhoto") String typePhoto) {
+	public ResponseEntity<Photo> addPhoto(@RequestParam("image") MultipartFile file , @RequestParam("urlClub") String url, @RequestParam("nom") String nom) {
 		Photo photo = new Photo();
 		try {			
-			photo.setNom(typePhoto);
+			photo.setNom(nom);
 			photo.setExtension(file.getOriginalFilename().split("\\.")[1]);
-			String chemin = UPLOADED_FOLDER + "\\" + urlClub + "\\" + photo.getNom() + "." + photo.getExtension();
+			String chemin = UPLOADED_FOLDER + "\\" + url + "\\" + photo.getNom() + "." + photo.getExtension();
 			photo.setChemin(chemin);
 			
-			File folderClub = new File(UPLOADED_FOLDER, urlClub); 
+			File folderClub = new File(UPLOADED_FOLDER, url); 
 			if (!folderClub.exists()) {
 				folderClub.mkdir();
 			}
@@ -54,7 +54,6 @@ public class PhotoController {
 		Photo photoResponse = photoService.addPhoto(photo);
 		return new ResponseEntity<>(photoResponse, HttpStatus.OK);
 	}
-	
 	
 	@GetMapping("/photo/{id}")
 	public ResponseEntity<Resource> getPhoto(@PathVariable("id") Integer id) throws IOException{

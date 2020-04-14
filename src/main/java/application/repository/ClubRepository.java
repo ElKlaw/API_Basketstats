@@ -16,4 +16,7 @@ public interface ClubRepository extends PagingAndSortingRepository<Club, Integer
 	
 	@Query("select c from Club c where c.url=?1")
 	Optional<Club> findCustomByURL(String url);
+	
+	@Query("select c from Club c join c.equipes e where e.id=?1")
+	Optional<Club> findCustomByIdEquipe(int id);
 }
