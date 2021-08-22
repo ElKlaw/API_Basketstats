@@ -1,7 +1,9 @@
 package application.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import application.bean.Club;
+import application.bean.Ville;
 import application.service.IClubService;
+import application.service.IVilleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -29,6 +32,9 @@ import io.swagger.annotations.ApiOperation;
 public class ClubController {
 	@Autowired
 	private IClubService clubService;
+	
+	@Autowired
+	private IVilleService villeService;
 
 	@ApiOperation(value="Obtenir l'ensemble des clubs")
 	@GetMapping("/clubs")
@@ -63,17 +69,24 @@ public class ClubController {
 	@ApiOperation(value="Ajout d'un nouveau club")
 	@PostMapping(value="club")
 	public ResponseEntity<Club> addClub(@RequestBody Club club) {
+		Club result = new Club(club);
+		Set<Ville> villesToAdd = club.getVilles();
+		
+		// Création du club
+		club.setVilles(new HashSet<Ville>());
 		Club clubResponse = clubService.addClub(club);
-		return new ResponseEntity<>(clubResponse, HttpStatus.OK);
+		
+		//Ajout des villes
+		Set<Ville> villes = new HashSet<Ville>();
+		villesToAdd.stream().forEach(ville -> {
+			ville.setClubVille(clubResponse);
+			villes.add(villeService.addVille(ville));
+		});
+		result.setVilles(villes);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	@ApiOperation(value="Modifier un club")
-	@PutMapping("club")
-	public ResponseEntity<Club> updateClub(@RequestBody Club club) {
-		Club clubResponse = clubService.updateClub(club);
-		return new ResponseEntity<>(clubResponse, HttpStatus.OK);
-	}
-	
+
 	@ApiOperation(value="Supprimer le club correspondant à l'ID")
 	@DeleteMapping("club/{id}")
 	public ResponseEntity<Void> deleteClub(@PathVariable("id") Integer id) {
@@ -81,12 +94,13 @@ public class ClubController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiOperation(value="PATCH le club correspondant à l'ID")
-	@PatchMapping("club/{id}")
-	public ResponseEntity<Club> patchClub(@PathVariable("id") Integer id, @RequestBody Club patchClub) {
-		Optional<Club> club = clubService.getClubById(id);
-		if(club.isPresent()) {
-			Club responseClub = clubService.patchClub(id, club.get(), patchClub);
+	@ApiOperation(value="modifie le club correspondant à l'ID")
+	@PutMapping("club/{id}")
+	public ResponseEntity<Club> patchClub(@PathVariable("id") Integer id, @RequestBody Club club) {
+		Optional<Club> optionalClub = clubService.getClubById(id);
+		if(optionalClub.isPresent()) {
+			club.setId(id);
+			Club responseClub = clubService.updateClub(club);
 			return new ResponseEntity<>(responseClub, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

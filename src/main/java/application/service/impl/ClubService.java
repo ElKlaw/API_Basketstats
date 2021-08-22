@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -92,27 +91,6 @@ public class ClubService implements IClubService {
 		}
 		clubRepository.save(club);
 		return joueurs;
-	}
-
-	@Override
-	public Club patchClub(int id, Club club, Club patchClub) {
-		if(StringUtils.isNotBlank(patchClub.getNom())) {
-			club.setNom(patchClub.getNom());
-		}
-		if(StringUtils.isNotBlank(patchClub.getNomcomplet())) {
-			club.setNomcomplet(patchClub.getNomcomplet());
-		}
-		if(StringUtils.isNotBlank(patchClub.getUrl())) {
-			club.setUrl(patchClub.getUrl());
-		}
-		if(StringUtils.isNotBlank(patchClub.getCodeClub())) {
-			club.setCodeClub(patchClub.getCodeClub());
-		}
-		if(StringUtils.isNotBlank(patchClub.getSport())) {
-			club.setSport(patchClub.getSport());
-		}
-		clubRepository.save(club);
-		return club;
 	}
 	
 }

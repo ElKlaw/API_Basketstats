@@ -6,13 +6,12 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import application.bean.Event;
 import application.bean.Match;
 
 public interface IMatchService {
 	List<Match> getMatchsJoueur(int id);
-	Page<Event> getMatchsEquipe(int id, Pageable pageable, String typeRecherche);
-	Page<Event> getMatchsClub(int id, Pageable pageable, String typeRecherche);
+	Page<Match> getMatchsEquipe(int id, Pageable pageable, String typeRecherche);
+	Page<Match> getMatchsClub(int id, Pageable pageable, String typeRecherche);
 	
 	// Chemin de base
 	Optional<Match> getMatchById(int id);

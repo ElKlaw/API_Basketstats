@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import application.bean.Event;
 import application.bean.Match;
 import application.service.IMatchService;
 import io.swagger.annotations.Api;
@@ -32,23 +31,23 @@ public class MatchController {
 	
 	@ApiOperation(value="Trouver les matchs de l'équipe correspondant à l'ID")
 	@GetMapping("equipe/{id}/matchs")
-	public ResponseEntity<Page<Event>> getEventsEquipe(@PathVariable("id") Integer id,
+	public ResponseEntity<Page<Match>> getEventsEquipe(@PathVariable("id") Integer id,
 			@RequestParam(defaultValue="0", value="page", required=false) int page, 
 			@RequestParam(defaultValue="10", value="size", required=false) int size,
 			@RequestParam(value="type", required=false) String typeRecherche) {
 		Pageable pageable =  PageRequest.of(page, size);
-		Page<Event> listMatch = matchService.getMatchsEquipe(id, pageable, typeRecherche);
+		Page<Match> listMatch = matchService.getMatchsEquipe(id, pageable, typeRecherche);
 		return new ResponseEntity<>(listMatch,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value="Trouver les matchs du club correspondant à l'ID")
 	@GetMapping("club/{id}/matchs")
-	public ResponseEntity<Page<Event>> getEventsMatchsClub(@PathVariable("id") Integer id, 
+	public ResponseEntity<Page<Match>> getEventsMatchsClub(@PathVariable("id") Integer id, 
 			@RequestParam(defaultValue="0", value="page", required=false) int page, 
 			@RequestParam(defaultValue="10", value="size", required=false) int size,
 			@RequestParam(value="type", required=false) String typeRecherche) {
 		Pageable pageable =  PageRequest.of(page, size);
-		Page<Event> listMatch = matchService.getMatchsClub(id, pageable, typeRecherche);
+		Page<Match> listMatch = matchService.getMatchsClub(id, pageable, typeRecherche);
 		return new ResponseEntity<>(listMatch,HttpStatus.OK);
 	}
 	

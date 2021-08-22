@@ -1,17 +1,15 @@
 package application.bean;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -49,9 +47,10 @@ public class Ville {
 	@ApiModelProperty(notes = "Pays de la ville", position = 6)
 	private String pays;
 	
-	@ManyToMany(mappedBy="villes")
-	@JsonIgnore
-	private Set<Club> clubs = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name="id_club")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Club clubVille;
 
 	public Integer getId() {
 		return id;
@@ -109,11 +108,13 @@ public class Ville {
 		this.pays = pays;
 	}
 
-	public Set<Club> getClubs() {
-		return clubs;
+	public Club getClubVille() {
+		return clubVille;
 	}
 
-	public void setClubs(Set<Club> clubs) {
-		this.clubs = clubs;
+	public void setClubVille(Club clubVille) {
+		this.clubVille = clubVille;
 	}
+
+	
 }

@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import application.bean.Event;
 import application.bean.Match;
 import application.repository.MatchRepository;
 import application.service.IMatchService;
@@ -22,7 +21,7 @@ public class MatchService implements IMatchService {
 	private MatchRepository matchRepository;
 	
 	@Override
-	public Page<Event> getMatchsEquipe(int id, Pageable pageable, String typeRecherche) {
+	public Page<Match> getMatchsEquipe(int id, Pageable pageable, String typeRecherche) {
 		if(TypeRechercheMatch.PASSE.toString().equals(typeRecherche)) {
 			return matchRepository.getMatchFromEquipePasse(id, pageable);
 		} else if(TypeRechercheMatch.FUTUR.toString().equals(typeRecherche)) {
@@ -38,7 +37,7 @@ public class MatchService implements IMatchService {
 	}
 
 	@Override
-	public Page<Event> getMatchsClub(int id, Pageable pageable, String typeRecherche) {
+	public Page<Match> getMatchsClub(int id, Pageable pageable, String typeRecherche) {
 		if(TypeRechercheMatch.PASSE.toString().equals(typeRecherche)) {
 			return matchRepository.getMatchFromClubPasse(id, pageable);
 		} else if(TypeRechercheMatch.FUTUR.toString().equals(typeRecherche)) {

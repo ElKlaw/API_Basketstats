@@ -1,6 +1,7 @@
 package application.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,16 +40,25 @@ public class VilleController {
 	}
 	
 	@ApiOperation(value="Modifier une ville")
-	@PutMapping("ville")
-	public ResponseEntity<Ville> updateVille(@RequestBody Ville ville) {
-		Ville villeResponse = villeService.updateVille(ville);
-		return new ResponseEntity<>(villeResponse, HttpStatus.OK);
+	@PutMapping("ville/{id}")
+	public ResponseEntity<Ville> updateVille(@PathVariable("id") Integer id, @RequestBody Ville ville) {
+		Optional<Ville> optionalVille = villeService.getVilleById(id);
+		if(optionalVille.isPresent()) {
+			ville.setId(id);
+			Ville villeResponse = villeService.updateVille(ville);
+			return new ResponseEntity<>(villeResponse, HttpStatus.OK);	
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@ApiOperation(value="Supprimer la ville correspondant à l'ID")
 	@DeleteMapping("ville/{id}")
-	public ResponseEntity<Void> deleteVille(@PathVariable("id") Integer id) {
-		villeService.deleteVille(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<Ville> deleteVille(@PathVariable("id") Integer id) {
+		Optional<Ville> optionalVille = villeService.getVilleById(id);
+		if(optionalVille.isPresent()) {
+			villeService.deleteVille(id);
+			return new ResponseEntity<>(optionalVille.get(), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 }

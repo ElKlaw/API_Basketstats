@@ -10,7 +10,7 @@ import application.bean.Ville;
 
 @Repository
 public interface VilleRepository extends PagingAndSortingRepository<Ville, Integer>{
-	@Query(value ="select v from Ville v join v.clubs c where c.id = ?1")
+	@Query(value ="select v from Ville v join v.clubVille c where c.id = ?1")
 	List<Ville> getAllVilleFromClub(int id);
 	
 	@Query("select v from Ville v where v.nom=?1 and v.codePostal=?2 ")

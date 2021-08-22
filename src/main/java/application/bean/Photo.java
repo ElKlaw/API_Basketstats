@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,13 +24,32 @@ public class Photo {
 	private String nom;
 	
 	@Column(name="extension")
-	@ApiModelProperty(notes = "", example = "", position = 1)
+	@ApiModelProperty(notes = "", example = "", position = 2)
 	private String extension;
 	
-	@Column(name="chemin")
-	@ApiModelProperty(notes = "", example = "", position = 1)
-	@JsonIgnore
-	private String chemin;
+	@Column(name="data")
+	@ApiModelProperty(notes = "", example = "", position = 3)
+	private byte[] data;
+
+	
+	public Photo() {
+		super();
+	}
+
+	public Photo(String nom, String extension, byte[] data) {
+		super();
+		this.nom = nom;
+		this.extension = extension;
+		this.data = data;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getNom() {
 		return nom;
@@ -42,18 +59,6 @@ public class Photo {
 		this.nom = nom;
 	}
 
-	public String getChemin() {
-		return chemin;
-	}
-
-	public void setChemin(String chemin) {
-		this.chemin = chemin;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
 	public String getExtension() {
 		return extension;
 	}
@@ -61,6 +66,13 @@ public class Photo {
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	
-	
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+		
 }

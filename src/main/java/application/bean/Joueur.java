@@ -6,8 +6,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +16,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import application.utils.enumeration.Sexe;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -39,10 +36,9 @@ public class Joueur {
 	@ApiModelProperty(notes = "Prénom du joueur", position = 2)
 	private String prenom;
 	
-	@Enumerated(EnumType.STRING)
 	@Column(name="sexe")
 	@ApiModelProperty(notes = "Sexe du joueur", position = 3)
-	private Sexe sexe;
+	private String sexe;
 	
 	@Column(name="datenaissance")
 	@ApiModelProperty(notes = "Date de naissance du joueur", example="15-06-1995", position = 4)
@@ -84,10 +80,12 @@ public class Joueur {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public Sexe getSexe() {
+
+	public String getSexe() {
 		return sexe;
 	}
-	public void setSexe(Sexe sexe) {
+
+	public void setSexe(String sexe) {
 		this.sexe = sexe;
 	}
 
@@ -123,6 +121,15 @@ public class Joueur {
 	public void removeClub(Club club) {
 		clubs.remove(club);
 		club.getJoueurs().remove(this);
+	}
+	
+	public void addEquipe(Equipe equipe) {
+		equipes.add(equipe);
+		equipe.getJoueurs().add(this);
+	}
+	public void removeEquipe(Equipe equipe) {
+		equipes.remove(equipe);
+		equipe.getJoueurs().remove(this);
 	}
 	
 }

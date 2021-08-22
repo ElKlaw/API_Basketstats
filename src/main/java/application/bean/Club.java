@@ -9,12 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,22 +30,27 @@ public class Club {
 	private Integer id;
 	
 	@Column(name="codeclub")
+	@NotNull
 	@ApiModelProperty(notes = "Code identifiant du Club via la Fédération", example = "PDL0049152", position = 1)
 	private String codeClub;
 	
 	@Column(name="url")
+	@NotNull
 	private String url;
 	
 	@Column(name="nomcomplet")
+	@NotNull
 	private String nomcomplet;
 	
 	@Column(name="nom")
+	@NotNull
 	@ApiModelProperty(notes = "Nom du club", position = 2)
 	private String nom;
 	
-	@Column(name="sport")
+	@ManyToOne
+	@JoinColumn(name="idsport")
 	@ApiModelProperty(notes = "Sport pratiqué par le club", position = 3)
-	private String sport;
+	private Sport sport;
 	
 	@OneToMany(mappedBy="clubEquipe")
 	@JsonIgnore
@@ -56,25 +60,45 @@ public class Club {
 	@JsonIgnore
 	private Set<Lieu> salles = new HashSet<>();
 	
-	@OneToOne
-	@JoinColumn(name = "idfond", referencedColumnName = "id")
-	private Photo fond;
+	@Column(name="fond")
+	private Integer fond;
 	
-	@OneToOne
-	@JoinColumn(name = "idlogo", referencedColumnName = "id")
-	private Photo logo;
+	@Column(name="logo")
+	private Integer logo;
 	
-	@ManyToMany
-	@JoinTable(name="clubville",
-		joinColumns= {@JoinColumn(name= "idclub", referencedColumnName="id")},
-		inverseJoinColumns= {@JoinColumn(name="idville", referencedColumnName="id")})
-	@OrderBy(value="nom")
+	@Column(name="couleurprincipale")
+	@NotNull
+	private String couleurprincipale;
+	
+	@Column(name="couleursecondaire")
+	@NotNull
+	private String couleursecondaire;
+	
+	@OneToMany(mappedBy = "clubVille")
 	private Set<Ville> villes = new HashSet<>();
 	
 	@ManyToMany(mappedBy="clubs")
 	@JsonIgnore
 	private Set<Joueur> joueurs = new HashSet<>();
 	
+	public Club(Club club) {
+		super();
+		this.id = club.getId();
+		this.codeClub = club.getCodeClub();
+		this.url = club.getUrl();
+		this.nomcomplet = club.getNomcomplet();
+		this.nom = club.getNom();
+		this.sport = club.getSport();
+		this.equipes = club.getEquipes();
+		this.salles = club.getSalles();
+		this.fond = club.getFond();
+		this.logo = club.getLogo();
+		this.villes = club.getVilles();
+		this.joueurs = club.getJoueurs();
+		this.couleurprincipale = club.getCouleurprincipale();
+		this.couleursecondaire = club.getCouleursecondaire();
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -103,11 +127,11 @@ public class Club {
 		this.nom = nom;
 	}
 
-	public String getSport() {
+	public Sport getSport() {
 		return sport;
 	}
 
-	public void setSport(String sport) {
+	public void setSport(Sport sport) {
 		this.sport = sport;
 	}
 
@@ -118,8 +142,6 @@ public class Club {
 	public void setEquipes(Set<Equipe> equipes) {
 		this.equipes = equipes;
 	}
-
-	
 
 	public Set<Lieu> getSalles() {
 		return salles;
@@ -161,21 +183,35 @@ public class Club {
 		this.joueurs = joueurs;
 	}
 
-	public Photo getFond() {
+	public Integer getFond() {
 		return fond;
 	}
 
-	public void setFond(Photo fond) {
+	public void setFond(Integer fond) {
 		this.fond = fond;
 	}
 
-	public Photo getLogo() {
+	public Integer getLogo() {
 		return logo;
 	}
 
-	public void setLogo(Photo logo) {
+	public void setLogo(Integer logo) {
 		this.logo = logo;
 	}
-	
-	
+
+	public String getCouleurprincipale() {
+		return couleurprincipale;
+	}
+
+	public void setCouleurprincipale(String couleurprincipale) {
+		this.couleurprincipale = couleurprincipale;
+	}
+
+	public String getCouleursecondaire() {
+		return couleursecondaire;
+	}
+
+	public void setCouleursecondaire(String couleursecondaire) {
+		this.couleursecondaire = couleursecondaire;
+	}
 }

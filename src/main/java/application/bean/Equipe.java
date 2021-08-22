@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,17 +59,19 @@ public class Equipe {
 	@ApiModelProperty(notes = "Poule de l'équipe", example = "A", position = 8)
 	private String poule;
 	
-	@OneToOne
-	@JoinColumn(name = "idphoto", referencedColumnName = "id")
-	private Photo photo;
+	@Column(name="photo")
+	private int photo;
 	
 	@ManyToMany(mappedBy="equipes")
 	@JsonIgnore
 	private Set<Joueur> joueurs = new HashSet<>();
 	
+	@ManyToMany(mappedBy="invitationequipes")
+	@JsonIgnore
+	private Set<Invitation> invitations = new HashSet<>();
+	
 	@ManyToOne
 	@JoinColumn(name="idclub")
-	@JsonIgnore
 	private Club clubEquipe;
 	
 	public Equipe() {
@@ -157,6 +158,14 @@ public class Equipe {
 		this.joueurs = joueurs;
 	}
 
+	public Set<Invitation> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(Set<Invitation> invitations) {
+		this.invitations = invitations;
+	}
+
 	public Club getClubEquipe() {
 		return clubEquipe;
 	}
@@ -165,13 +174,15 @@ public class Equipe {
 		this.clubEquipe = clubEquipe;
 	}
 
-	public Photo getPhoto() {
+	public int getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(Photo photo) {
+	public void setPhoto(int photo) {
 		this.photo = photo;
 	}
+
+	
 
 }
 

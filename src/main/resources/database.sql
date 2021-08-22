@@ -51,17 +51,6 @@ CREATE TABLE Joueur(
 );
 
 /*------------------ TABLE Utilisateur ------------------*/
-/*CREATE TABLE Utilisateur(
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	identifiant VARCHAR(100) UNIQUE,
-	motdepasse VARCHAR(200),
-	email VARCHAR(200),
-	idJoueur INT NOT NULL,
-	secret VARCHAR(200),
-	FOREIGN KEY (idJoueur) REFERENCES Joueur(id)
-);*/
-
-/*------------------ TABLE Utilisateur ------------------*/
 CREATE TABLE User(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100),
@@ -72,22 +61,6 @@ CREATE TABLE User(
 	provider VARCHAR(200),
 	providerid VARCHAR(200)
 );
-
-
-/*------------------ TABLE Role ------------------*/
-/*CREATE TABLE Role(
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(100)
-);*/
-
-/*------------------ TABLE RoleUtilisateur ------------------*/
-/*CREATE TABLE RoleUtilisateur(
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	idRole INT NOT NULL,
-	idUtilisateur INT NOT NULL,
-	FOREIGN KEY (idRole) REFERENCES Role(id),
-	FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id)
-);*/
 
 /*------------------ TABLE CLUB ------------------*/
 
@@ -530,62 +503,50 @@ CREATE TABLE Poule(
 	FOREIGN KEY (idDivision) REFERENCES Division(id)
 );
 
-INSERT INTO Sport VALUES(NULL,'BasketBall',TRUE);
-INSERT INTO Sport VALUES(NULL,'Football',TRUE);
-INSERT INTO Sport VALUES(NULL,'Handball',TRUE);
-INSERT INTO Sport VALUES(NULL,'Tennis',TRUE);
+INSERT INTO Sport VALUES(NULL,'BasketBall');
+INSERT INTO Sport VALUES(NULL,'Football');
+INSERT INTO Sport VALUES(NULL,'Handball');
+INSERT INTO Sport VALUES(NULL,'Tennis');
 
-INSERT INTO Categorie VALUES(NULL,1,'Sénior');
-INSERT INTO Categorie VALUES(NULL,1,'U20');
-INSERT INTO Categorie VALUES(NULL,1,'U17');
-INSERT INTO Categorie VALUES(NULL,1,'U15');
-INSERT INTO Categorie VALUES(NULL,1,'U13');
-INSERT INTO Categorie VALUES(NULL,1,'U11');
-INSERT INTO Categorie VALUES(NULL,1,'U9');
+INSERT INTO Niveau VALUES(NULL,'National',1);
+INSERT INTO Niveau VALUES(NULL,'Régional',1);
+INSERT INTO Niveau VALUES(NULL,'Départemental',1);
 
-INSERT INTO Niveau VALUES(NULL,1,'National');
-INSERT INTO Niveau VALUES(NULL,1,'Régional');
-INSERT INTO Niveau VALUES(NULL,1,'Départemental');
+INSERT INTO Division VALUES(NULL,'1',1);
+INSERT INTO Division VALUES(NULL,'2',1);
+INSERT INTO Division VALUES(NULL,'3',1);
+INSERT INTO Division VALUES(NULL,'1',2);
+INSERT INTO Division VALUES(NULL,'2',2);
+INSERT INTO Division VALUES(NULL,'3',2);
+INSERT INTO Division VALUES(NULL,'1',3);
+INSERT INTO Division VALUES(NULL,'2',3);
+INSERT INTO Division VALUES(NULL,'3',3);
+INSERT INTO Division VALUES(NULL,'4',3);
+INSERT INTO Division VALUES(NULL,'5',3);
 
-INSERT INTO Division VALUES(NULL,1,'1');
-INSERT INTO Division VALUES(NULL,1,'2');
-INSERT INTO Division VALUES(NULL,1,'3');
-INSERT INTO Division VALUES(NULL,2,'1');
-INSERT INTO Division VALUES(NULL,2,'2');
-INSERT INTO Division VALUES(NULL,2,'3');
-INSERT INTO Division VALUES(NULL,3,'1');
-INSERT INTO Division VALUES(NULL,3,'2');
-INSERT INTO Division VALUES(NULL,3,'3');
-INSERT INTO Division VALUES(NULL,3,'4');
-INSERT INTO Division VALUES(NULL,3,'5');
-
-INSERT INTO Poule VALUES(NULL,1,'A');
-INSERT INTO Poule VALUES(NULL,2,'A');
-INSERT INTO Poule VALUES(NULL,3,'A');
-INSERT INTO Poule VALUES(NULL,3,'B');
-INSERT INTO Poule VALUES(NULL,4,'A');
-INSERT INTO Poule VALUES(NULL,5,'A');
-INSERT INTO Poule VALUES(NULL,5,'B');
-INSERT INTO Poule VALUES(NULL,6,'A');
-INSERT INTO Poule VALUES(NULL,6,'B');
-INSERT INTO Poule VALUES(NULL,7,'A');
-INSERT INTO Poule VALUES(NULL,8,'A');
-INSERT INTO Poule VALUES(NULL,8,'B');
-INSERT INTO Poule VALUES(NULL,9,'A');
-INSERT INTO Poule VALUES(NULL,9,'B');
-INSERT INTO Poule VALUES(NULL,9,'C');
-INSERT INTO Poule VALUES(NULL,10,'A');
-INSERT INTO Poule VALUES(NULL,10,'B');
-INSERT INTO Poule VALUES(NULL,10,'C');
-INSERT INTO Poule VALUES(NULL,10,'D');
-INSERT INTO Poule VALUES(NULL,10,'E');
-INSERT INTO Poule VALUES(NULL,11,'A');
-INSERT INTO Poule VALUES(NULL,11,'B');
-INSERT INTO Poule VALUES(NULL,11,'C');
-INSERT INTO Poule VALUES(NULL,11,'D');
-INSERT INTO Poule VALUES(NULL,11,'E');
-INSERT INTO Poule VALUES(NULL,11,'F');
-/*
-INSERT INTO Role VALUES(NULL,'USER');
-INSERT INTO Role VALUES(NULL,'ADMIN');
-*/
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,1,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,2,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,3,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,3,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,4,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,5,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,5,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,6,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,6,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,7,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,8,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,8,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,9,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,9,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,9,'C');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,10,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,10,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,10,'C');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,10,'D');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,10,'E');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,11,'A');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,11,'B');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,11,'C');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,11,'D');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,11,'E');
+INSERT INTO Poule (id, iddivision, nom) VALUES(NULL,11,'F');

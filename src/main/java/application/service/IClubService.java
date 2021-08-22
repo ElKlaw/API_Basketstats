@@ -20,7 +20,6 @@ public interface IClubService {
 	Optional<Club> getClubByIdEquipe(int id);
 	Club addClub(Club club);
 	Club updateClub(Club club);
-	Club patchClub(int id, Club club, Club patchClub);
 	boolean deleteClub(int id);
 	boolean existClub(String url);
 	Joueur addJoueurToClub(Club club, Joueur joueur);
