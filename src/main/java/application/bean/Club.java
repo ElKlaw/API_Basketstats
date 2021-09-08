@@ -50,15 +50,7 @@ public class Club {
 	@ManyToOne
 	@JoinColumn(name="idsport")
 	@ApiModelProperty(notes = "Sport pratiqué par le club", position = 3)
-	private Sport sport;
-	
-	@OneToMany(mappedBy="clubEquipe")
-	@JsonIgnore
-	private Set<Equipe> equipes = new HashSet<>();
-	
-	@OneToMany(mappedBy="clubSalle")
-	@JsonIgnore
-	private Set<Lieu> salles = new HashSet<>();
+	private Sport sport;	
 	
 	@Column(name="fond")
 	private Integer fond;
@@ -77,9 +69,16 @@ public class Club {
 	@OneToMany(mappedBy = "clubVille")
 	private Set<Ville> villes = new HashSet<>();
 	
+	@OneToMany(mappedBy="clubSalle")
+	private Set<Salle> salles = new HashSet<>();
+	
 	@ManyToMany(mappedBy="clubs")
 	@JsonIgnore
 	private Set<Joueur> joueurs = new HashSet<>();
+	
+	@OneToMany(mappedBy="clubEquipe")
+	@JsonIgnore
+	private Set<Equipe> equipes = new HashSet<>();
 	
 	public Club(Club club) {
 		super();
@@ -143,11 +142,11 @@ public class Club {
 		this.equipes = equipes;
 	}
 
-	public Set<Lieu> getSalles() {
+	public Set<Salle> getSalles() {
 		return salles;
 	}
 
-	public void setSalles(Set<Lieu> salles) {
+	public void setSalles(Set<Salle> salles) {
 		this.salles = salles;
 	}
 

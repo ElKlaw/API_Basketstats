@@ -37,9 +37,13 @@ public class Adresse {
 	@ApiModelProperty(notes = "Latitude", position = 5)
 	private String latitude;
 	
-	@ManyToOne
-	@JoinColumn(name="idville")
-	private Ville ville;
+	@Column(name="codepostal")
+	@ApiModelProperty(notes = "Code postal de la ville", position = 5)
+	private int codePostal;
+	
+	@Column(name="nom")
+	@ApiModelProperty(notes = "Nom de la ville", position = 1)
+	private String ville;
 
 	public Integer getId() {
 		return id;
@@ -81,13 +85,19 @@ public class Adresse {
 		this.latitude = latitude;
 	}
 
-	public Ville getVille() {
-		return ville;
+	public int getCodePostal() {
+		return codePostal;
 	}
 
-	public void setVille(Ville ville) {
+	public void setCodePostal(int codePostal) {
+		this.codePostal = codePostal;
+	}
+
+	public void setVille(String ville) {
 		this.ville = ville;
 	}
+	
+	
 	
 	
 }
