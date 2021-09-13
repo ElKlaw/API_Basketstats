@@ -31,7 +31,7 @@ public class Salle {
 	@ManyToOne
 	@JoinColumn(name="idadresse")
 	private Adresse adresse;
-	
+
 	@OneToOne
 	@JoinColumn(name="idclub")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -68,6 +68,5 @@ public class Salle {
 	public void setClubSalle(Club clubSalle) {
 		this.clubSalle = clubSalle;
 	}
-	
 	
 }

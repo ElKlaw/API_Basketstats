@@ -27,12 +27,7 @@ public class VilleService implements IVilleService{
 
 	@Override
 	public Ville addVille(Ville ville) {
-		Ville villeIdentique = villeRepository.getVilleFromNomAndCodePostal(ville.getNom(), ville.getCodePostal());
-		if(villeIdentique!=null) {
-			return villeIdentique;
-		}else {
-			return villeRepository.save(ville);
-		}
+		return villeRepository.save(ville);
 	}
 
 	@Override

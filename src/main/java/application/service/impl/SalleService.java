@@ -58,5 +58,4 @@ public class SalleService implements ISalleService{
 	public List<Salle> getSalleByIdClub(int id) {
 		return salleRepository.findAllSalleByIdClub(id);
 	}
-
 }

@@ -99,4 +99,6 @@ public class Adresse {
 		this.codePostal = codePostal;
 	}
 	
+	
+	
 }

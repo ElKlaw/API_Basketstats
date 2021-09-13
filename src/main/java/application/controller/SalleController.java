@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import application.bean.Joueur;
 import application.bean.Salle;
 import application.service.ISalleService;
 import io.swagger.annotations.Api;
@@ -41,10 +39,15 @@ public class SalleController {
 	}
 	
 	@ApiOperation(value="Modifier une salle")
-	@PutMapping("salle")
-	public ResponseEntity<Salle> updateSalle(@RequestBody Salle salle) {
-		Salle response = salleService.updateSalle(salle);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	@PutMapping("salle/{id}")
+	public ResponseEntity<Salle> updateSalle(@PathVariable("id") Integer id, @RequestBody Salle salle) {
+		Optional<Salle> optional = salleService.getSalleById(id);
+		if(optional.isPresent()) {
+			salle.setId(id);
+			Salle response = salleService.updateSalle(salle);
+			return new ResponseEntity<>(response, HttpStatus.OK);	
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@ApiOperation(value="Supprimer la salle correspondant à l'ID")
