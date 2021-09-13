@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
@@ -37,9 +35,13 @@ public class Adresse {
 	@ApiModelProperty(notes = "Latitude", position = 5)
 	private String latitude;
 	
-	@ManyToOne
-	@JoinColumn(name="idville")
-	private Ville ville;
+	@Column(name="ville")
+	@ApiModelProperty(notes = "Nom de la ville", position = 6)
+	private String ville;
+	
+	@Column(name="codepostal")
+	@ApiModelProperty(notes = "Code postal de la ville", position = 7)
+	private int codePostal;
 
 	public Integer getId() {
 		return id;
@@ -81,13 +83,20 @@ public class Adresse {
 		this.latitude = latitude;
 	}
 
-	public Ville getVille() {
+	public String getVille() {
 		return ville;
 	}
 
-	public void setVille(Ville ville) {
+	public void setVille(String ville) {
 		this.ville = ville;
 	}
-	
+
+	public int getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(int codePostal) {
+		this.codePostal = codePostal;
+	}
 	
 }

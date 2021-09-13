@@ -3,6 +3,7 @@ package application.bean;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,6 +64,21 @@ public class Match {
 	@ManyToOne
 	@JoinColumn(name="idequipe")
 	private Equipe equipe;
+	
+	@ManyToOne
+	@Nullable
+	@JoinColumn(name="idadresserdv")
+	private Adresse adresseRdv;
+	
+	@ManyToOne
+	@Nullable
+	@JoinColumn(name="idsallematch")
+	private Salle salleMatch;
+	
+	@ManyToOne
+	@Nullable
+	@JoinColumn(name="idadressematch")
+	private Adresse adresseMatch;
 
 	public Integer getId() {
 		return id;
@@ -142,5 +158,29 @@ public class Match {
 
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
+	}
+
+	public Adresse getAdresseRdv() {
+		return adresseRdv;
+	}
+
+	public void setAdresseRdv(Adresse adresseRdv) {
+		this.adresseRdv = adresseRdv;
+	}
+
+	public Salle getSalleMatch() {
+		return salleMatch;
+	}
+
+	public void setSalleMatch(Salle salleMatch) {
+		this.salleMatch = salleMatch;
+	}
+
+	public Adresse getAdresseMatch() {
+		return adresseMatch;
+	}
+
+	public void setAdresseMatch(Adresse adresseMatch) {
+		this.adresseMatch = adresseMatch;
 	}
 }
